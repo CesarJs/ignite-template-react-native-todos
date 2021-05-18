@@ -3,11 +3,14 @@ import { Image, Platform, StyleSheet, TextInput, TouchableOpacity, View } from '
 
 import checkIcon from '../assets/icons/Check.png';
 
+import { light, dark } from '../styles/themes';
+
 interface TodoInputProps {
   addTask: (task: string) => void;
+	darkTheme: boolean;
 }
 
-export function TodoInput({ addTask }: TodoInputProps) {
+export function TodoInput({ addTask, darkTheme }: TodoInputProps) {
   const [task, setTask] = useState('');
 
   function handleAddNewTask() {
@@ -18,7 +21,7 @@ export function TodoInput({ addTask }: TodoInputProps) {
   return (
     <View style={[styles.inputContainer, Platform.OS === 'ios' ? styles.inputIOSShadow : styles.inputAndroidShadow]}>
       <TextInput
-        style={styles.input}
+        style={darkTheme ? styles.inputDark : styles.input}
         placeholder="Adicionar novo todo..."
         returnKeyType="send"
 				value={task}
@@ -28,7 +31,7 @@ export function TodoInput({ addTask }: TodoInputProps) {
       <TouchableOpacity
         testID="add-new-task-button"
         activeOpacity={0.7}
-        style={styles.addButton}
+        style={darkTheme ? styles.addButtonDark : styles.addButton}
         onPress={handleAddNewTask}
       >
         <Image source={checkIcon} />
@@ -39,7 +42,7 @@ export function TodoInput({ addTask }: TodoInputProps) {
 
 const styles = StyleSheet.create({
   inputContainer: {
-    backgroundColor: '#F5F4F8',
+    backgroundColor: light.backgorund_input,
     borderRadius: 5,
     marginTop: -25,
     marginHorizontal: 40,
@@ -49,13 +52,13 @@ const styles = StyleSheet.create({
   },
   input: {
     flex: 1,
-    backgroundColor: '#F5F4F8',
+    backgroundColor: light.backgorund_input,
     paddingLeft: 12,
     borderTopLeftRadius: 5,
     borderBottomLeftRadius: 5,
   },
   inputIOSShadow: {
-    shadowColor: "#000",
+    shadowColor: light.shadowColor,
     shadowOffset: {
       width: 0,
       height: 2
@@ -67,7 +70,42 @@ const styles = StyleSheet.create({
     elevation: 5
   },
   addButton: {
-    backgroundColor: '#3FAD27',
+    backgroundColor: light.background_button,
+    height: 50,
+    paddingHorizontal: 16,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderTopRightRadius: 5,
+    borderBottomRightRadius: 5,
+  },
+	inputContainerDark: {
+    backgroundColor: dark.backgorund_input,
+    borderRadius: 5,
+    marginTop: -25,
+    marginHorizontal: 40,
+    height: 50,
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  inputDark: {
+    flex: 1,
+    backgroundColor: dark.backgorund_input,
+    paddingLeft: 12,
+    borderTopLeftRadius: 5,
+    borderBottomLeftRadius: 5,
+		height: 50
+  },
+  inputIOSShadowDark: {
+    shadowColor: dark.shadowColor,
+    shadowOffset: {
+      width: 0,
+      height: 2
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84
+  },
+  addButtonDark: {
+    backgroundColor: dark.background_button,
     height: 50,
     paddingHorizontal: 16,
     justifyContent: 'center',
